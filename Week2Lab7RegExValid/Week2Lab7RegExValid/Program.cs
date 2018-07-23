@@ -9,6 +9,7 @@ namespace Week2Lab7RegExValid
 {
     class Program
     {
+        //need retrys for false 
         static void Main(string[] args)
         {
             var Repeat = true;
