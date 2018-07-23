@@ -11,6 +11,7 @@ namespace Week2Lab7RegExValid
     {
         static void Main(string[] args)
         {
+            var Repeat = true;
             string userName = null;
             string email = null;
             string phone = null;
@@ -20,9 +21,9 @@ namespace Week2Lab7RegExValid
             //validate emails 
             var emailPattern = @"[\w]{5,30}@[\w]{5,10}.[\w]{2,3}";
             //validate phone numbers: (d d d - d d d - d d d d)
-            var phonePattern = @"[\d]{3}[\d]{3}[\d]{4}";
+            var phonePattern = @"[\d]{3}([.\\-]\s)[\d]{3}([.\-]|\s)[\d]{4}";
             //validate date (day, month, year)
-            var datePattern = @"[\d]{2}[\d]{2}[\d]{4}";
+            var datePattern = @"[\d]{2}([.\\-]|\s)[\d]{2}([.\\-]|\s)[\d]{4}";
             
             Console.WriteLine("Hey, are you older than 18? Fill this out to (possibly) win a car!");
 
@@ -65,7 +66,7 @@ namespace Week2Lab7RegExValid
                 Console.WriteLine($"{ex.Message}");
             }
 
-            Console.WriteLine("What's your phone number? Separate area code and the next three digits with spaces");
+            Console.WriteLine("What's your phone number? Separate parts please! Should be 10 numbers");
             phone = Console.ReadLine();
             var validPhone = Regex.IsMatch(phone, phonePattern);
             try
@@ -105,6 +106,7 @@ namespace Week2Lab7RegExValid
             {
                 Console.WriteLine($"{ex.Message}");
             }
+            //bool Retry(Regex);
             Console.ReadKey();
         }
     }
