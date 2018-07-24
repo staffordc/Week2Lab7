@@ -9,10 +9,8 @@ namespace Week2Lab7RegExValid
 {
     class Program
     {
-        //need retrys for false 
         static void Main(string[] args)
         {
-            var Repeat = true;
             string userName = null;
             string email = null;
             string phone = null;
@@ -20,11 +18,13 @@ namespace Week2Lab7RegExValid
             //Validate Names
             var namePattern = @"[A-Z][a-z]{1,29}\s[A-Z][a-z]{1,29}";
             //validate emails 
-            var emailPattern = @"[\w]{5,30}@[\w]{5,10}.[\w]{2,3}";
+            var emailPattern = @"([\w]|\.|\\|\/|\-){5,30}@[\w]{5,10}\.[\w]{2,3}";
             //validate phone numbers: (d d d - d d d - d d d d)
-            var phonePattern = @"[\d]{3}([.\\-]\s)[\d]{3}([.\-]|\s)[\d]{4}";
+            var phonePattern = @"[\d]{3}([\.\\\-\/]|\s)[\d]{3}([\.\\\-\/]|\s)[\d]{4}";
             //validate date (day, month, year)
-            var datePattern = @"[\d]{2}([.\\-]|\s)[\d]{2}([.\\-]|\s)[\d]{4}";
+            var datePattern = @"[\d]{2}([\.\\\-\/]|\s)[\d]{2}([\.\\\-\/]|\s)[\d]{4}";
+            //validate html tags
+            var htmlPattern = @"\<\w{1,9}\>\s\<\\\w{1,9}\>";
             
             Console.WriteLine("Hey, are you older than 18? Fill this out to (possibly) win a car!");
 
@@ -85,6 +85,7 @@ namespace Week2Lab7RegExValid
             {
                 Console.WriteLine($"{ex.Message}");
             }
+
             Console.WriteLine("What's your birthdate? Write it dd mm yyyy");
             date = Console.ReadLine();
             var validDate = Regex.IsMatch(date, datePattern);
@@ -94,10 +95,6 @@ namespace Week2Lab7RegExValid
                 {
                     Console.WriteLine("Wow, I bet you love to recieve birthday promotions!\nAnd now I know you're definitely 18!");
                 }
-                //else if(date > 24 07 2000 )
-                //{
-                  //  Console.WriteLine("Hey, wait a sec, you're less than 18!!! Nevermind!");
-                //}
                 else
                 {
                     Console.WriteLine("I think you're telling schoolyeard tales.\nBet your social security card has it written out right!");
@@ -107,8 +104,26 @@ namespace Week2Lab7RegExValid
             {
                 Console.WriteLine($"{ex.Message}");
             }
-            //bool Retry(Regex);
+
+            string htmlTags = Console.ReadLine();
+            var validHtmlTags = Regex.IsMatch(htmlTags, htmlPattern);
+            try
+            {
+                if (validHtmlTags)
+                {
+                    Console.WriteLine("One more thing scout, could you give me an opening and closing html tag set to prove you're not a robot?");
+                }
+                else
+                {
+                    Console.WriteLine("C'mon, scouts honor here! Maybe try again? Html tags look like <x> </x> if that helps");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.Message}");
+            }
             Console.ReadKey();
+            //Add retries throughout
         }
     }
 }
